@@ -1,0 +1,17 @@
+{
+  "manifest_version": 3,
+  "name": "Pomodoro Time Tracker",
+  "version": "1.0",
+  "description": "Basit bir Pomodoro Time Tracker Chrome Extension",
+  "background": {
+    "service_worker": "background.js"
+  },
+  "permissions": ["storage", "tabs", "alarms", "notifications"],
+  "action": {
+    "default_icon": {
+      "16": "favicon-16.png",
+      "48": "favicon-48.png",
+      "96": "favicon-96.png"
+    }
+  }
+}
