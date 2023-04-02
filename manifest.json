@@ -1,8 +1,7 @@
 {
   "manifest_version": 3,
-  "name": "Pomodone AI Time Tracker",
+  "name": "My Extension",
   "version": "1.0",
-  "description": "Simple AI Time Tracker for Chrome",
   "background": {
     "service_worker": "background.js"
   },
@@ -14,5 +13,6 @@
       "96": "favicon-96.png",
       "128": "favicon-128.png"
     }
-  }
+  },
+  "options_page": "options.html"
 }

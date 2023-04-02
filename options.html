@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Pomodone Options</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="base.css">
+    <link rel="stylesheet" href="select2.min.css">
+    <link rel="stylesheet" href="wizard.css">
+</head>
+
+<body>
+    <div id="wizard-container" class="wizard-container">
+        <div class="wizard-card" id="card-0">
+            <h2>Welcome to Pomodone!</h2>
+            <p>Let's set up your first configuration.</p>
+            <div class="wizard-buttons">
+                <button class="wizard-next-btn" id="wizard-next-btn-0">Next</button>
+            </div>
+        </div>
+
+        <div class="wizard-card" id="card-1">
+            <h2>Work duration</h2>
+            <p>How long do you want to work for in each pomodoro session?</p>
+            <div class="form-group">
+                <input type="number" class="duration-input" id="work-duration-input" min="1" value="25">
+            </div>
+            <div class="wizard-buttons">
+                <button class="wizard-prev-btn" id="wizard-prev-btn-1">Back</button>
+                <button class="wizard-next-btn" id="wizard-next-btn-1">Next</button>
+            </div>
+        </div>
+
+        <div class="wizard-card" id="card-2">
+            <h2>Break duration</h2>
+            <p>How long do you want to rest between pomodoro sessions?</p>
+            <div class="form-group">
+                <input type="number" class="duration-input" id="break-duration-input" min="1" value="5">
+            </div>
+            <div class="wizard-buttons">
+                <button class="wizard-prev-btn" id="wizard-prev-btn-2">Back</button>
+                <button class="wizard-next-btn" id="wizard-next-btn-2">Next</button>
+            </div>
+        </div>
+
+        <div class="wizard-card" id="card-3">
+            <h2>Finalize configuration</h2>
+            <p>Please review your settings below and click 'Save' to finalize your configuration:</p>
+            <div class="form-group">
+                <label for="work-duration-summary">Work duration:</label>
+                <p id="work-duration-summary"></p>
+            </div>
+            <div class="form-group">
+                <label for="break-duration-summary">Break duration:</label>
+                <p id="break-duration-summary"></p>
+            </div>
+            <div class="wizard-buttons">
+                <button class="wizard-prev-btn" id="wizard-prev-btn-3">Back</button>
+                <button class="btn btn-primary" id="save-button">Save</button>
+            </div>
+        </div>
+    </div>
+</body>
+
+<script src="jquery-3.6.0.min.js"></script>
+<script src="select2.min.js"></script>
+<script src="options.js"></script>
+
+</html>
