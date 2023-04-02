@@ -1,8 +1,8 @@
 {
   "manifest_version": 3,
-  "name": "Pomodoro Time Tracker",
+  "name": "Pomodone AI Time Tracker",
   "version": "1.0",
-  "description": "Basit bir Pomodoro Time Tracker Chrome Extension",
+  "description": "Simple AI Time Tracker for Chrome",
   "background": {
     "service_worker": "background.js"
   },
