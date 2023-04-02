@@ -12,12 +12,16 @@ chrome.action.onClicked.addListener((tab) => {
             pauseTabId = newTab.id;
         });
         showPauseNotification();
+        isRunning = !isRunning;
+        updateBadge();
     } else {
         if (pauseTabId) {
             chrome.tabs.get(pauseTabId, (tab) => {
                 if (chrome.runtime.lastError) {
                     // The tab doesn't exist anymore, so it's safe to start the timer
                     intervalId = setInterval(updateTimer, 1000);
+                    isRunning = !isRunning;
+                    updateBadge();
                 } else {
                     // The pause tab still exists, so focus on it instead of starting the timer
                     chrome.tabs.update(pauseTabId, { active: true });
@@ -25,12 +29,11 @@ chrome.action.onClicked.addListener((tab) => {
             });
         } else {
             intervalId = setInterval(updateTimer, 1000);
+            isRunning = !isRunning;
+            updateBadge();
         }
     }
-    isRunning = !isRunning;
-    updateBadge();
 });
-
 chrome.tabs.onRemoved.addListener((tabId) => {
     if (tabId === pauseTabId) {
         pauseTabId = null;
@@ -45,21 +48,19 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
 function showPauseNotification() {
     chrome.notifications.create({
         type: 'basic',
-        iconUrl: 'icon128.png',
+        iconUrl: chrome.runtime.getURL('icon128.png'),
         title: 'Pomodoro Durduruldu',
         message: 'Pomodoro zamanlayıcısı durduruldu.'
     });
 }
-
 function showPomodoroCompleteNotification() {
     chrome.notifications.create({
         type: 'basic',
-        iconUrl: 'icon128.png',
+        iconUrl: chrome.runtime.getURL('icon128.png'),
         title: 'Pomodoro Tamamlandı',
         message: 'Bir Pomodoro tamamlandı. Şimdi mola zamanı!'
     });
 }
-
 function updateTimer() {
     if (currentTime <= 0) {
         clearInterval(intervalId);
