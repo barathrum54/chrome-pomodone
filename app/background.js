@@ -2,7 +2,7 @@ let isRunning = false;
 let intervalId;
 let currentTime = 25 * 60;
 let pauseTabId;
-
+let isPaused = false;
 chrome.action.onClicked.addListener(handlePomodoroClick);
 chrome.tabs.onRemoved.addListener(handlePauseTabRemove);
 chrome.runtime.onMessage.addListener(handlePauseMessage);
@@ -25,19 +25,24 @@ chrome.contextMenus.onClicked.addListener((info, tab) => {
 });
 
 function handlePomodoroClick(tab) {
+
     if (isRunning) {
         pausePomodoro();
     } else {
+        if (isPaused)
+            return;
         startPomodoro();
     }
 }
 
 function pausePomodoro() {
+
     clearInterval(intervalId);
     chrome.tabs.create({ url: 'pages/pause/pause.html' }, handlePauseTabCreated);
 
     showNotification('Pomodoro Durduruldu', 'Pomodoro zamanlayıcısı durduruldu.');
     isRunning = false;
+    isPaused = true;
     updateBadge();
 }
 
@@ -48,8 +53,11 @@ function handlePauseTabCreated(newTab) {
 function handlePauseTabRemove(tabId) {
     if (tabId === pauseTabId) {
         pauseTabId = null;
+        isPaused = false;
     }
+    startPomodoro();
 }
+
 
 function handlePauseMessage(request, sender, sendResponse) {
     if (request.type === 'pauseMessage') {
