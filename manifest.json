@@ -1,18 +1,18 @@
 {
   "manifest_version": 3,
-  "name": "My Extension",
+  "name": "Pomodone",
   "version": "1.0",
   "background": {
-    "service_worker": "background.js"
+    "service_worker": "app/background.js"
   },
-  "permissions": ["storage", "tabs", "alarms", "notifications"],
+  "permissions": ["storage", "tabs", "alarms", "notifications", "contextMenus"],
   "action": {
     "default_icon": {
-      "16": "favicon-16.png",
-      "48": "favicon-48.png",
-      "96": "favicon-96.png",
-      "128": "favicon-128.png"
+      "16": "assets/favicon-16.png",
+      "48": "assets/favicon-48.png",
+      "96": "assets/favicon-96.png",
+      "128": "assets/favicon-128.png"
     }
   },
-  "options_page": "options.html"
+  "options_page": "pages/options/options.html"
 }

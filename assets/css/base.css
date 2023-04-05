@@ -108,4 +108,27 @@ body {
     background: #3f3f3f;
 }
 
+.success-message {
+    position: fixed;
+    top: 5%;
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: white;
+    padding: 10px 5px;
+    border-radius: 5px;
+    text-align: center;
+    width: fit-content;
+}
 
+.error-message {
+    position: fixed;
+    top: 5%;
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: white;
+    color: #b92b27;
+    padding: 10px 5px;
+    border-radius: 5px;
+    text-align: center;
+    width: fit-content;
+}

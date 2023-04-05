@@ -6,6 +6,23 @@ let pauseTabId;
 chrome.action.onClicked.addListener(handlePomodoroClick);
 chrome.tabs.onRemoved.addListener(handlePauseTabRemove);
 chrome.runtime.onMessage.addListener(handlePauseMessage);
+chrome.runtime.onInstalled.addListener(() => {
+    // Sağ tıklama menüsünde "Pomodone Duraklat" öğesini oluşturun
+    chrome.contextMenus.create({
+        id: "logs",
+        title: "See all logs",
+        contexts: ["all"],
+    });
+});
+
+// Sağ tıklama menüsündeki öğeye tıklanıldığında işlem yap
+chrome.contextMenus.onClicked.addListener((info, tab) => {
+    if (info.menuItemId === "logs") {
+        //open a new tab with the logs.html page
+        chrome.tabs.create({ url: "pages/logs/logs.html" });
+        //set that tab as active
+    }
+});
 
 function handlePomodoroClick(tab) {
     if (isRunning) {
@@ -17,7 +34,7 @@ function handlePomodoroClick(tab) {
 
 function pausePomodoro() {
     clearInterval(intervalId);
-    chrome.tabs.create({ url: 'pause.html' }, handlePauseTabCreated);
+    chrome.tabs.create({ url: 'pages/pause/pause.html' }, handlePauseTabCreated);
 
     showNotification('Pomodoro Durduruldu', 'Pomodoro zamanlayıcısı durduruldu.');
     isRunning = false;
@@ -66,7 +83,7 @@ function updateTimer() {
 function showNotification(title, message) {
     chrome.notifications.create({
         type: 'basic',
-        iconUrl: chrome.runtime.getURL('favicon-128.png'),
+        iconUrl: chrome.runtime.getURL('assets/favicon-128.png'),
         title,
         message
     });

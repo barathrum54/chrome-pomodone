@@ -5,7 +5,16 @@ $(document).ready(function () {
     const workDurationInput = $('#work-duration-input');
     const breakDurationInput = $('#break-duration-input');
     const startButton = $('#start-button');
+    const saveButton = $('#save-button');
+    // Load user settings from storage or initialize with default values
+    const workDuration = parseInt(localStorage.getItem('workDuration'), 10) || 25;
+    const breakDuration = parseInt(localStorage.getItem('breakDuration'), 10) || 5;
 
+    setTimeout(() => {
+        workDurationInput.val(workDuration);
+        breakDurationInput.val(breakDuration);
+        console.log(breakDurationInput)
+    }, 100);
     // Load user settings from storage or initialize with default values
     chrome.storage.sync.get(['workDuration', 'breakDuration'], function (result) {
         if (chrome.runtime.lastError) {
@@ -64,12 +73,9 @@ $(document).ready(function () {
             chrome.tabs.create({ url: 'https://pomodoneapp.com/' });
         });
     });
-
-    // Helper function to show error message
-    function showError(message) {
-        const errorMessage = $('<div>').addClass('error-message').text(message);
-        $('body').append(errorMessage);
-    }
+    saveButton.on('click', function () {
+        saveSettingsAndExit();
+    });
 
     // Wizard functionality
     let currentCardIndex = 0;
@@ -117,7 +123,7 @@ $(document).ready(function () {
     function saveSettingsAndExit() {
         let workDuration, breakDuration;
         // If a preset is selected, use its values
-        if (presetSelect.val() !== 'custom') {
+        if (presetSelect.val()) {
             const presetValues = presetSelect.val().split(',');
             workDuration = parseInt(presetValues[0], 10);
             breakDuration = parseInt(presetValues[1], 10);
@@ -133,17 +139,29 @@ $(document).ready(function () {
             return;
         }
 
-        // Save user settings to storage
-        chrome.storage.sync.set({ workDuration: workDuration, breakDuration: breakDuration }, function () {
-            if (chrome.runtime.lastError) {
-                showError('An error occurred while saving user settings. Please try again later.');
-                return;
-            }
+        // Save user settings to local storage
+        localStorage.setItem('workDuration', workDuration);
+        localStorage.setItem('breakDuration', breakDuration);
 
-            // Hide the wizard and show the start button
-            $('#wizard-container').hide();
-            startButton.show();
-        });
+        // Show success message
+        showSuccess("Settings saved successfully!")
+    }
+    function removeAfterDelay(element, delay) {
+        setTimeout(function () {
+            element.remove();
+        }, delay);
+    }
+    function showSuccess(message) {
+        const successMessage = $('<div>').addClass('success-message').text(message);
+        $('body').append(successMessage);
+        removeAfterDelay(successMessage, 3000);
+
+    }
+    function showError(message) {
+        const errorMessage = $('<div>').addClass('error-message').text(message);
+        $('body').append(errorMessage);
+        removeAfterDelay(errorMessage, 3000);
+
     }
 
     // Show the first card of the wizard
